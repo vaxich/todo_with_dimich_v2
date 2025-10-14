@@ -40,26 +40,35 @@ function App() {
 
   const addTask = (newTaskTitle: string) => {
     const newTask = { id: crypto.randomUUID(), title: newTaskTitle, isDone: false }
-    setTasks([newTask , ... tasks])
+    setTasks([newTask, ...tasks])
   }
 
   const changeFilter = (newValueFilter: FilterValueType) => {
     setFilter(newValueFilter)
   }
 
-  return (
-    <div className="App">
-      <Todolist 
-      title="what to learn" 
-      tasks={tasksForTodolist} 
-      removetask={removetask} 
+  const changeTaskStatus = (taskID: string, isDone: boolean) => {
+    const newTasks = tasks.map((task) => task.id === taskID ? { ...task, isDone: isDone }: task)
+    setTasks(newTasks)
+}
+
+
+
+return (
+  <div className="App">
+    <Todolist
+      title="what to learn"
+      filter={filter}
+      tasks={tasksForTodolist}
+      removetask={removetask}
       changeFilter={changeFilter}
-      addTask = {addTask}
-       />
+      addTask={addTask}
+      changeTaskStatus={changeTaskStatus}
+    />
 
 
-    </div>
-  );
+  </div>
+);
 }
 
 export default App;
