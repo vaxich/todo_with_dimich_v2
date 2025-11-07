@@ -7,6 +7,7 @@ export type RemoveTodoListActionType = {
 }
 export type AddTotodlistActionType = {
     type: 'ADD-TODOLIST',
+    newIdTodolist: string
     newTodolistTitle: string
 }
 export type ChangeTotodlistTitleActionType = {
@@ -34,8 +35,8 @@ export const todolistReducer = (state: todolistType[], action: ActionTypes) => {
             return state.filter(tl => tl.id !== action.todolistId)
         }
         case 'ADD-TODOLIST': {
-            let newIdTodolist = '546546'
-            let newTodolist: todolistType = { id: newIdTodolist, title: action.newTodolistTitle, filter: "All" };
+            // let newIdTodolist = '546546'
+             let newTodolist: todolistType = { id: action.newIdTodolist, title: action.newTodolistTitle, filter: "All" };
             return [...state, newTodolist]
             // setTodolists([newTodolist, ...todolists]);
             // setTasks({ ...tasks, [newIdTodolist]: [] })
@@ -64,8 +65,12 @@ export const RemoveTodoolistAC = (todolistId: string) : RemoveTodoListActionType
 }
 
 export const AddTodoolistAC = (newTodolistTitle: string) : AddTotodlistActionType => {
+    const crypto = require('crypto');
+    let newIdTodolist = crypto.randomUUID();
+   
     return {
         type: 'ADD-TODOLIST',
+        newIdTodolist,
         newTodolistTitle: newTodolistTitle
     }
 }
